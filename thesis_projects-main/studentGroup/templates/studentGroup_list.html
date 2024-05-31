@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% if edit and is_creator %}
+    <div class="container">
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="groupName">Group Name</label>
+          <input type="text" class="form-control" id="groupName" name="groupName" value="{{ group.groupName }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Save</button>
+      </form>
+    </div>
+  {% else %}
+    {% if is_creator %}
+      <div class="">
+        <h5 class="">Group Name: <i class="text-muted"> {{ group.groupName }}</i></h5>
+      </div>
+      <div class="">
+        <h5 class="">Join Code: <i class="text-muted"> {{ group.join_code }}</i></h5>
+      </div>
+    {% endif %}
+      <h2 class="text-center">Group Members</h2>
+      {% comment %} group creator {% endcomment %}
+      <div class="">
+        <h5 class="">Group Creator: <i class="text-muted"> {{ group.creator.username }}</i></h5>
+      </div>
+      <table class="table table-striped">
+          <thead>
+              <tr>
+                  <th>Username</th>
+                  {% if is_creator %}
+                      <th>Actions</th>
+                  {% endif %}
+              </tr>
+          </thead>
+          <tbody>
+              {% for member in group.members.all %}
+                  <tr>
+                      <td>{{ member.username }}</td>
+                      {% if is_creator %}
+                          <td>
+                              <a href="{% url 'studentGroup_remove_member' group.id member.id %}" class="btn btn-danger">Remove</a>
+                          </td>
+                      {% endif %}
+                  </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+      {% if is_creator %}
+          <a href="{% url 'studentGroup_edit' group.id %}" class="btn btn-warning">Edit Group</a>
+          <a href="{% url 'studentGroup_delete' group.id %}" class="btn btn-danger">Delete Group</a>
+      {% endif %}
+  {% endif %}
+{% endblock %}

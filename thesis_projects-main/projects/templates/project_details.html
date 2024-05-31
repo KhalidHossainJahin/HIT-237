@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ project.title }}</h1>
+<p><strong>Supervisor:</strong> {{ project.supervisor }}</p>
+<p><strong>Full description:</strong> {{ project.full_description }}</p>
+<p><strong>Topic Number:</strong> {{ project.topic_number }}</p>
+{% endblock %}

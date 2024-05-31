@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Group Name: {{ application.group }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Applied for: {{ application.project }}</h6>
+    <p class="card-text">CV Zip: <a href="{{ application.cv_zip_link }}"> 🔗Link</a></p>
+    <p class="card-text">Approved: {{ application.is_approved|yesno:"Yes,No" }}</p>
+    <p class="card-text">Rejected: {{ application.is_rejected|yesno:"Yes,No" }}</p>
+
+    {% if user_type == 'supervisor'%}
+      {% if application.is_approved or application.is_rejected %}
+        <div class="alert alert-info" role="alert">
+          This application has already been processed.
+        </div>
+      {% else %}
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="application_id" value="{{ application.id }}">
+          <button type="submit" name="approve" class="btn btn-success">Approve</button>
+          <button type="submit" name="reject" class="btn btn-danger">Reject</button>
+        </form>
+      {% endif %}
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}
+
+<!--
+TODO make a notification when accepted or rejected student application
+-->

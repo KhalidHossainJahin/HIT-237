@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Project List</h2>
+    <a href="{% url 'project_create' %}">Add new project</a>
+    <ul>
+        {% for project in projects %}
+            <li>{{ project.title }} by {{ project.supervisor }}
+                {% if project.supervisor.user == request.user or user_type == 'unit_coordinator' %}
+                    - <a href="{% url 'project_update' project.id %}">Edit</a>
+                    - <a href="{% url 'project_delete' project.id %}">Delete</a>
+                {% elif user_type == 'student' %}
+                    - <a href="{% url 'view_project' project.id %}">View</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+

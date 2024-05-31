@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ form.errors }}
+    </div>
+{% endif %}
+{% if user_type %}
+    <div class="alert alert-success" role="alert">
+        User type has been set successfully.
+    </div>
+{% else %}
+  <div class="form-container">
+    <div class="form-header">
+        <h2>Set User Type</h2>
+    </div>
+    <form method="post" action="{% url 'setUserType' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.user_type.label_tag }}
+            {{ form.user_type }}
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Set User Type</button>
+    </form>
+  </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Submit Your Thesis Project</h1>
+<p>For Multiple authors use comma(,) as delimiter. Select for which project you are submitting thesis paper. </p>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

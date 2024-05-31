@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% if is_applied %}
+    <div class="alert alert-success" role="alert">
+      You have already applied for this project.
+    </div>
+  {% endif %}
+<div class="container p-5">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>{{ project.title }}</h2>
+      <p><strong>Supervisor:</strong> {{ project.supervisor }}</p>
+      <p><strong>Brief Description:</strong> {{ project.brief_description }}</p>
+      <p><strong>Full Description:</strong> {{ project.full_description }}</p>
+      <p><strong>Topic Number:</strong> {{ project.topic_number }}</p>
+    </div>
+  </div>
+
+  {% if user_type == "student" and not is_applied %}
+    <div class="row mt-md-4">
+      <div class="col-md-12">
+        <h2>Apply for this project</h2>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Apply</button>
+        </form>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

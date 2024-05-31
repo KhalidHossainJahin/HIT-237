@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Applications</h1>
+  <ul>
+    {% for application in applications %}
+      <li>
+        {{ application }}
+        {% if user_type == 'supervisor' %}
+          <a href="{% url 'application_details' application.id %}">View</a>
+        {% endif %}
+      </li>
+    {% empty %}
+      <li>No applications found.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
